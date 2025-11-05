@@ -1,4 +1,5 @@
 import { View, Text, StyleSheet, TouchableOpacity, Image, Modal } from "react-native";
+import { useSafeAreaInsets } from "react-native-safe-area-context";
 import { FontAwesome5, FontAwesome } from "@expo/vector-icons";
 import { RootSiblingParent } from "react-native-root-siblings";
 import { useLocalSearchParams, useRouter } from "expo-router";
@@ -6,20 +7,25 @@ import { useEffect, useState } from "react";
 import * as Clipboard from 'expo-clipboard';
 import Toast from "react-native-root-toast";
 
+import Title from "../../components/cryptum";
 import Store from "../../utilities/store";
+import Bar from "../../components/bar";
 import { styles } from "../../styles";
 import { theme } from "../../theme";
 
-import copy from "../../assets/copy.png"
-import Title from "../../components/cryptum";
-import Bar from "../../components/bar";
+import copy from "../../assets/copy.png";
+import showPasswordPng from "../../assets/show_password.png";
+import hidePassword from "../../assets/hide_password.png";
+import { authenticate } from "../../utilities/auth";
 
 export default function Add() {
+    const insets = useSafeAreaInsets();
     const { indx } = useLocalSearchParams();
     const router = useRouter();
 
     const [pass, setPass] = useState(null);
     const [showConfirm, setShowConfirm] = useState(false);
+    const [showPassword, setShowPassword] = useState(false);
 
     useEffect(() => {
         const getPass = async () => {
@@ -28,21 +34,19 @@ export default function Add() {
 
             const password = await store.getByIndex(indx);
             setPass(password);
-        }
-
+        };
         getPass();
     }, []);
 
-    const goHome = () => {
-        router.replace("/passwords");
-    }
-
     const handleDelete = async () => {
-        const store = new Store();
-        await store.init();
-        await store.deleteByIndex(indx);
-        setShowConfirm(false);
-        router.replace("/passwords");
+        authenticate("Identificate para eliminar", async() => {
+            const store = new Store();
+            await store.init();
+            await store.deleteByIndex(indx);
+            setShowConfirm(false);
+            router.replace("/passwords");
+        });
+
     };
 
     const copyToClipboard = async (value) => {
@@ -56,10 +60,21 @@ export default function Add() {
         });
     };
 
+    const buttonStyles = StyleSheet.create({
+        editButton: { ...styles.button, width: "90%", alignSelf: "center", position: "absolute", bottom: insets.bottom + 80, height: 45 },
+        deleteButton: { ...styles.button, backgroundColor: theme.colors.textPrimary, width: "90%", alignSelf: "center", position: "absolute", bottom: insets.bottom + 20, height: 45 },
+    });
+
+    const handleUpdate = () => {
+        authenticate("Identificate para editar", goToUpdate);
+    }
+
+    const goToUpdate = () => { router.push(`/passwords/edit/${indx}`) }
+
     return (
         <RootSiblingParent>
             <View style={styles.screen}>
-                <Bar/>
+                <Bar />
                 <Title back />
 
                 {pass ? (
@@ -67,24 +82,24 @@ export default function Add() {
                         {/* Icono y nombre */}
                         <View style={customStyles.iconBox}>
                             <Icon icon={pass.icon} itemName={pass.name} />
-                            <Text style={styles.text}>{pass.name}</Text>
+                            <Text style={customStyles.nameText}>{pass.name}</Text>
                         </View>
 
                         {/* Campos */}
-                        {renderValue("Correo/usuario", pass.email, copyToClipboard)}
-                        {renderValue("Contraseña", pass.password, copyToClipboard)}
+                        {renderCopyField("Correo/usuario", pass.email, copyToClipboard)}
+                        {renderPasswordField("Contraseña", pass.password, showPassword, setShowPassword, copyToClipboard)}
 
                         {/* Botones */}
                         <TouchableOpacity
-                            onPress={() => router.push(`/passwords/edit/${indx}`)}
-                            style={customStyles.editButton}
+                            onPress={handleUpdate}
+                            style={buttonStyles.editButton}
                         >
                             <Text style={styles.buttonText}>Editar</Text>
                         </TouchableOpacity>
 
                         <TouchableOpacity
                             onPress={() => setShowConfirm(true)}
-                            style={customStyles.deleteButton}
+                            style={buttonStyles.deleteButton}
                         >
                             <Text style={customStyles.deleteButtonText}>Eliminar</Text>
                         </TouchableOpacity>
@@ -137,21 +152,63 @@ function Icon({ icon, itemName }) {
         );
 }
 
-// Render de valor con copy
-const renderValue = (label, value, copyFunc) => (
+// Campo de texto con copiar (para email u otros)
+const renderCopyField = (label, value, copyFunc) => (
     <View style={{ marginTop: 15 }}>
         <Text style={customStyles.label}>{label}:</Text>
         {value ? (
-            <TouchableOpacity
-                style={customStyles.copyBox}
-                onPress={() => copyFunc(value)}
-                activeOpacity={0.7}
-            >
-                <Text style={[styles.text, { flex: 1 }]} numberOfLines={1} ellipsizeMode="tail">
-                    {value}
-                </Text>
-                <Image source={copy} style={customStyles.copy} />
-            </TouchableOpacity>
+            <View style={customStyles.copyBox}>
+                <TouchableOpacity onPress={() => copyFunc(value)} style={{ marginRight: 10 }}>
+                    <Image source={copy} style={customStyles.copy} />
+                </TouchableOpacity>
+                <TouchableOpacity
+                    style={{ flex: 1 }}
+                    onPress={() => copyFunc(value)}
+                    activeOpacity={0.7}
+                >
+                    <Text style={[styles.text]} numberOfLines={1} ellipsizeMode="tail">
+                        {value}
+                    </Text>
+                </TouchableOpacity>
+            </View>
+        ) : (
+            <Text style={styles.secondaryText}>-</Text>
+        )}
+    </View>
+);
+
+// Campo de contraseña con copiar a la izquierda y mostrar/ocultar a la derecha
+const renderPasswordField = (label, value, showPassword, setShowPassword, copyFunc) => (
+    <View style={{ marginTop: 15 }}>
+        <Text style={customStyles.label}>{label}:</Text>
+        {value ? (
+            <View style={customStyles.copyBox}>
+                <TouchableOpacity
+                    onPress={() => {
+                        if (showPassword) copyFunc(value);
+                    }} style={{ marginRight: 10 }}>
+                    <Image source={copy}
+                        style={customStyles.copy}
+                    />
+                </TouchableOpacity>
+                <TouchableOpacity
+                    style={{ flex: 1 }}
+                    onPress={() => {
+                        if (showPassword) copyFunc(value);
+                    }}
+                    activeOpacity={0.7}
+                >
+                    <Text style={[styles.text]} numberOfLines={1} ellipsizeMode="tail">
+                        {showPassword ? value : "*".repeat(value.length)}
+                    </Text>
+                </TouchableOpacity>
+                <TouchableOpacity onPress={() => setShowPassword(!showPassword)} style={{ marginLeft: 10 }}>
+                    <Image
+                        source={showPassword ? hidePassword : showPasswordPng}
+                        style={{ width: 24, height: 24, tintColor: theme.colors.primary }}
+                    />
+                </TouchableOpacity>
+            </View>
         ) : (
             <Text style={styles.secondaryText}>-</Text>
         )}
@@ -162,13 +219,10 @@ const customStyles = StyleSheet.create({
     heading: { ...styles.heading, color: theme.colors.primary, marginTop: 15 },
     back: { width: 20, height: 20 },
     iconBox: { flexDirection: "column", alignItems: "center", justifyContent: "center" },
-    icon: {
-        marginTop: 5
-    },
+    icon: { marginTop: 5 },
     copyBox: {
         flexDirection: "row",
         alignItems: "center",
-        justifyContent: "space-between",
         backgroundColor: "#1e1e1e",
         borderRadius: 10,
         paddingVertical: 10,
@@ -179,12 +233,8 @@ const customStyles = StyleSheet.create({
     letter: { fontSize: 50, color: theme.colors.primary, fontWeight: "bold" },
     letterContainer: { justifyContent: "center", alignItems: "center", width: 60, height: 60 },
     label: { ...styles.secondaryText, marginTop: 15 },
-
-    editButton: { ...styles.button, width: "90%", alignSelf: "center", position: "absolute", bottom: 135, height: 45 },
-
-    deleteButton: { ...styles.button, backgroundColor: theme.colors.textPrimary, width: "90%", alignSelf: "center", position: "absolute", bottom: 75, height: 45 },
     deleteButtonText: { ...styles.buttonText, color: theme.colors.primary },
-
+    nameText: { ...styles.text, textAlign: "center" },
     modalOverlay: {
         flex: 1,
         backgroundColor: "rgba(0,0,0,0.5)",

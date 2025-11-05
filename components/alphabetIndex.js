@@ -2,8 +2,11 @@ import { useRef } from "react";
 import { View, ScrollView, Text, StyleSheet, TouchableOpacity } from "react-native";
 import Group from "./group"
 import { theme } from "../theme";
+import { useSafeAreaInsets } from "react-native-safe-area-context";
+
 
 export default function NinetyTenExample({ data }) {
+    const insets = useSafeAreaInsets();
     const alphabet = "#ABCDEFGHIJKLMNÑOPQRSTUVWXYZ";
 
     const scrollViewRef = useRef();
@@ -21,10 +24,42 @@ export default function NinetyTenExample({ data }) {
         }
     };
 
+    const styles = StyleSheet.create({
+        container: { flex: 1 },
+        row: { flexDirection: "row", flex: 1 },
+        scroll: { width: "90%" },
+        alphabet: {
+            width: "10%",
+            justifyContent: "space-between",
+            alignItems: "center",
+            paddingLeft: 10,
+            paddingBottom: insets.bottom 
+        },
+        letterButton: {
+            width: "100%",
+            justifyContent: "center",
+            alignItems: "center",
+        },
+        text: {
+            color: theme.colors.textPrimary,
+            fontWeight: "bold",
+            fontSize: 15,
+        },
+        textNoPass: {
+            color: theme.colors.textPrimary,
+            alignSelf: "center",
+            marginTop: "100%",
+            marginLeft: 20
+        },
+        sep: {
+            marginBottom: 30
+        }
+    });
+
     return (
         <View style={styles.container}>
             <View style={styles.row}>
-                <ScrollView 
+                <ScrollView
                     style={styles.scroll}
                     showsVerticalScrollIndicator={false}
                     ref={scrollViewRef}
@@ -43,7 +78,7 @@ export default function NinetyTenExample({ data }) {
                             <Group title={key} items={value} />
                         </View>
                     ))}
-                    <View style={styles.sep}/>
+                    <View style={styles.sep} />
                 </ScrollView>
 
                 <View style={styles.alphabet}>
@@ -52,6 +87,7 @@ export default function NinetyTenExample({ data }) {
                             style={styles.letterButton}
                             key={`letter-${letter}`}
                             onPress={() => goToLetter(letter)}
+                            onPressIn={() => goToLetter(letter)}
                         >
                             <Text style={styles.text}>{letter}</Text>
                         </TouchableOpacity>
@@ -62,34 +98,3 @@ export default function NinetyTenExample({ data }) {
     );
 }
 
-const styles = StyleSheet.create({
-    container: { flex: 1 },
-    row: { flexDirection: "row", flex: 1 },
-    scroll: { width: "90%" },
-    alphabet: {
-        width: "10%",
-        justifyContent: "flex-start",
-        alignItems: "center",
-        paddingLeft: 10,
-    },
-    letterButton: {
-        width: "100%",
-        justifyContent: "center",
-        alignItems: "center",
-        paddingVertical: 5,
-    },
-    text: {
-        color: theme.colors.textPrimary,
-        fontWeight: "bold",
-        fontSize: 15,
-    },
-    textNoPass: {
-        color: theme.colors.textPrimary,
-        alignSelf: "center",
-        marginTop: "100%",
-        marginLeft: 20
-    },
-    sep: {
-        marginBottom: 30
-    }
-});

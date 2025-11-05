@@ -12,7 +12,11 @@ export default function Element({ item }) {
             <View style={customStyles.row}>
                 <Icon icon={item.icon} itemName={item.name} />
                 <View style={customStyles.textContainer}>
-                    <Text style={customStyles.title}>{item.name}</Text>
+                    <Text 
+                        style={customStyles.title}
+                        numberOfLines={1}
+                        ellipsizeMode="tail"
+                    >{item.name}</Text>
                     <Text style={customStyles.subtitle}>{item.email}</Text>
                 </View>
             </View>
@@ -50,7 +54,6 @@ function Icon({ icon, itemName }) {
 const customStyles = StyleSheet.create({
     card: {
         width: "100%",
-        maxWidth: 600,
         backgroundColor: "#1e1e1e",
         borderRadius: 12,
         padding: 16,
@@ -90,6 +93,7 @@ const customStyles = StyleSheet.create({
         fontSize: 18,
         color: theme.colors.textPrimary,
         fontWeight: "600",
+        
     },
     subtitle: {
         fontSize: 14,

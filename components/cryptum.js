@@ -4,9 +4,32 @@ import { styles } from "../styles";
 import { theme } from "../theme";
 
 import backImg from "../assets/back.png";
+import { useSafeAreaInsets } from "react-native-safe-area-context";
 
 export default function Title({ back = false }) {
+    const insets = useSafeAreaInsets();
     const router = useRouter();
+
+    const customStyles = StyleSheet.create({
+        title: {
+            marginTop: insets.top,
+            marginBottom: 10,
+            flexDirection: "row",
+            alignItems: "center",
+            justifyContent: "center",
+            alignSelf: "flex-start",
+        },
+        heading: {
+            ...styles.heading,
+            color: theme.colors.primary,
+            marginBottom: 0
+        },
+        back: {
+            width: 20,
+            height: 20,
+            marginRight: 10,
+        },
+    });
 
     return (
         <TouchableOpacity 
@@ -22,23 +45,4 @@ export default function Title({ back = false }) {
     );
 }
 
-const customStyles = StyleSheet.create({
-    title: {
-        marginTop: 17,
-        marginBottom: 10,
-        flexDirection: "row",
-        alignItems: "center",
-        justifyContent: "center",
-        alignSelf: "flex-start",
-    },
-    heading: {
-        ...styles.heading,
-        color: theme.colors.primary,
-        marginBottom: 0
-    },
-    back: {
-        width: 20,
-        height: 20,
-        marginRight: 10,
-    },
-});
+
