@@ -1,19 +1,16 @@
 import { TouchableOpacity, Text, StyleSheet, View } from "react-native";
-import { FontAwesome } from "@expo/vector-icons";
-
 import { theme } from "../theme";
+import { AntDesign, FontAwesome5, FontAwesome } from "@expo/vector-icons";
+
+import { useRouter } from "expo-router";
 
 export default function Element({ item }) {
-    return (
-        <TouchableOpacity style={customStyles.card}>
-            <View style={customStyles.row}>
-                <FontAwesome
-                    name={item.icon.toLowerCase()}
-                    size={40}
-                    color={theme.colors.primary}
-                    style={customStyles.icon}
-                />
+    const router = useRouter();
 
+    return (
+        <TouchableOpacity style={customStyles.card} onPress={() => router.push(`/passwords/${item.index}`)}>
+            <View style={customStyles.row}>
+                <Icon icon={item.icon} itemName={item.name} />
                 <View style={customStyles.textContainer}>
                     <Text style={customStyles.title}>{item.name}</Text>
                     <Text style={customStyles.subtitle}>{item.email}</Text>
@@ -21,6 +18,33 @@ export default function Element({ item }) {
             </View>
         </TouchableOpacity>
     );
+}
+
+function Icon({ icon, itemName }) {
+    const [type, name] = icon.split(":");
+    if (type == "FontAwesome")
+        return (
+            <FontAwesome
+                name={name}
+                size={40}
+                color={theme.colors.primary}
+                style={customStyles.icon}
+            />
+        )
+    else if (type == "FontAwesome5")
+        return (
+            <FontAwesome5
+                name={name}
+                size={40}
+                color={theme.colors.primary}
+                style={customStyles.icon} />
+        )
+    else
+        return (
+            <View style={customStyles.letterContainer}>
+                <Text style={customStyles.letter}>{itemName[0].toUpperCase()}</Text>
+            </View>
+        )
 }
 
 const customStyles = StyleSheet.create({
@@ -44,6 +68,21 @@ const customStyles = StyleSheet.create({
     icon: {
         marginRight: 16,
     },
+    letterContainer: { 
+        justifyContent: "center", 
+        alignItems: "center", 
+        width: 40, 
+        height: 40 
+    },
+    letter: {
+        textAlign: "center",
+        lineHeight: 50,
+        fontSize: 40,
+        color: theme.colors.primary,
+        marginRight: 16,
+        fontWeight: "bold",
+    },
+
     textContainer: {
         flexShrink: 1,
     },

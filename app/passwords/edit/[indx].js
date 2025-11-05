@@ -161,7 +161,7 @@ export default function Edit() {
 
                 <View style={customStyles.sep} />
 
-                <TouchableOpacity style={customStyles.button} onPress={savePassword}>
+                <TouchableOpacity style={customStyles.saveButton} onPress={savePassword}>
                     <Text style={styles.text}>Guardar</Text>
                 </TouchableOpacity>
 
@@ -179,7 +179,8 @@ const customStyles = StyleSheet.create({
     required: { ...styles.heading, color: theme.colors.primary, marginTop: 20, fontSize: 18 },
     label: { ...styles.secondaryText, marginTop: 15, padding: 5 },
     input: { width: "100%", backgroundColor: "#1e1e1e", color: theme.colors.primary, borderRadius: 10, padding: 12, fontSize: 16, borderWidth: 1 },
-    button: { ...styles.button, height: 40 },
-    cancelButton: { ...styles.secondaryButton, height: 40 },
+    saveButton: { ...styles.button, width: "90%", alignSelf: "center", position: "absolute", bottom: 135, height: 45 },
+    cancelButton: { ...styles.button, backgroundColor: theme.colors.textPrimary, width: "90%", alignSelf: "center", position: "absolute", bottom: 75, height: 45 },
+    secondaryButtonText: { ...styles.buttonText, color: theme.colors.primary },
     sep: { marginTop: 50 },
 });

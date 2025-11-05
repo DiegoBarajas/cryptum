@@ -15,15 +15,15 @@ const { width, height } = Dimensions.get('window');
 export default function PasswordIndex() {
     const router = useRouter();
 
-    const [ groups, setGroups ] = useState({});
+    const [groups, setGroups] = useState({});
 
     useEffect(() => {
-        const getGroups = async() => {
+        const getGroups = async () => {
             const store = new Store();
             await store.init();
 
             const passwords = await store.getAll();
-           
+
             const groups = {};
             passwords.forEach((item, indx) => {
                 if (!item.name || typeof item.name !== "string") return;
@@ -38,11 +38,21 @@ export default function PasswordIndex() {
                 item['index'] = indx;
 
                 groups[key].push(item);
-
             });
 
-            setGroups(groups)
+            // Crear un objeto nuevo con '#' primero y luego A-Z
+            const orderedGroups = {};
+            if (groups["#"]) orderedGroups["#"] = groups["#"];
+            Object.keys(groups)
+                .filter(key => key !== "#")
+                .sort()
+                .forEach(key => {
+                    orderedGroups[key] = groups[key];
+                });
+
+            setGroups(orderedGroups);
         }
+
 
         getGroups();
     }, []);
@@ -58,7 +68,7 @@ export default function PasswordIndex() {
             <AlphabeticalIndex data={groups} />
 
             <TouchableOpacity style={customStyles.addButton} onPress={addElement}>
-                <Image 
+                <Image
                     style={customStyles.addImage}
                     source={addImg}
                 />
@@ -70,7 +80,7 @@ export default function PasswordIndex() {
 
 const customStyles = StyleSheet.create({
     heading: {
-        ...styles.heading,       
+        ...styles.heading,
         color: theme.colors.primary,
         marginTop: 15,
     },

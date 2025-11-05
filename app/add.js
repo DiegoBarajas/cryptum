@@ -155,12 +155,12 @@ export default function Add() {
 
                 <View style={customStyles.sep} />
 
-                <TouchableOpacity style={customStyles.button} onPress={savePassword}>
+                <TouchableOpacity style={customStyles.saveButton} onPress={savePassword}>
                     <Text style={styles.text}>Guardar</Text>
                 </TouchableOpacity>
 
                 <TouchableOpacity style={customStyles.cancelButton} onPress={() => router.back()}>
-                    <Text style={styles.secondaryButtonText}>Cancelar</Text>
+                    <Text style={customStyles.secondaryButtonText}>Cancelar</Text>
                 </TouchableOpacity>
             </View>
         </RootSiblingParent>
@@ -203,10 +203,10 @@ const customStyles = StyleSheet.create({
         ...styles.button,
         height: 40
     },
-    cancelButton: {
-        ...styles.secondaryButton,
-        height: 40,
-    },
+    saveButton: { ...styles.button, width: "90%", alignSelf: "center", position: "absolute", bottom: 135, height: 45 },
+
+    cancelButton: { ...styles.button, backgroundColor: theme.colors.textPrimary, width: "90%", alignSelf: "center", position: "absolute", bottom: 75, height: 45 },
+    secondaryButtonText: { ...styles.buttonText, color: theme.colors.primary },
     sep: {
         marginTop: 75
     }

@@ -1,5 +1,5 @@
 import { View, Text, StyleSheet, TouchableOpacity, Image, Modal } from "react-native";
-import {  FontAwesome5, FontAwesome } from "@expo/vector-icons";
+import { FontAwesome5, FontAwesome } from "@expo/vector-icons";
 import { RootSiblingParent } from "react-native-root-siblings";
 import { useLocalSearchParams, useRouter } from "expo-router";
 import { useEffect, useState } from "react";
@@ -164,6 +164,9 @@ const customStyles = StyleSheet.create({
     heading: { ...styles.heading, color: theme.colors.primary, marginTop: 15 },
     back: { width: 20, height: 20 },
     iconBox: { flexDirection: "column", alignItems: "center", justifyContent: "center" },
+    icon: {
+        marginTop: 5
+    },
     copyBox: {
         flexDirection: "row",
         alignItems: "center",
@@ -178,10 +181,10 @@ const customStyles = StyleSheet.create({
     letter: { fontSize: 50, color: theme.colors.primary, fontWeight: "bold" },
     letterContainer: { justifyContent: "center", alignItems: "center", width: 60, height: 60 },
     label: { ...styles.secondaryText, marginTop: 15 },
-        
-    editButton: { ...styles.button, width: "85%", alignSelf: "center", position: "absolute", bottom: 100 },
 
-    deleteButton: { ...styles.button, backgroundColor: theme.colors.textPrimary, width: "85%",alignSelf: "center", position: "absolute", bottom: 50 },
+    editButton: { ...styles.button, width: "90%", alignSelf: "center", position: "absolute", bottom: 135, height: 45 },
+
+    deleteButton: { ...styles.button, backgroundColor: theme.colors.textPrimary, width: "90%", alignSelf: "center", position: "absolute", bottom: 75, height: 45 },
     deleteButtonText: { ...styles.buttonText, color: theme.colors.primary },
 
     modalOverlay: {
