@@ -7,16 +7,17 @@ import { useEffect, useState } from "react";
 import * as Clipboard from 'expo-clipboard';
 import Toast from "react-native-root-toast";
 
+import { authenticate } from "../../utilities/auth";
 import Title from "../../components/cryptum";
 import Store from "../../utilities/store";
 import Bar from "../../components/bar";
 import { styles } from "../../styles";
 import { theme } from "../../theme";
 
-import copy from "../../assets/copy.png";
 import showPasswordPng from "../../assets/show_password.png";
 import hidePassword from "../../assets/hide_password.png";
-import { authenticate } from "../../utilities/auth";
+import copy from "../../assets/copy.png";
+import infoPng from "../../assets/info.png"
 
 export default function Add() {
     const insets = useSafeAreaInsets();
@@ -26,6 +27,7 @@ export default function Add() {
     const [pass, setPass] = useState(null);
     const [showConfirm, setShowConfirm] = useState(false);
     const [showPassword, setShowPassword] = useState(false);
+    const [showInfoModal, setShowInfoModal] = useState(false);
 
     useEffect(() => {
         const getPass = async () => {
@@ -39,7 +41,7 @@ export default function Add() {
     }, []);
 
     const handleDelete = async () => {
-        authenticate("Identificate para eliminar", async() => {
+        authenticate("Identificate para eliminar", async () => {
             const store = new Store();
             await store.init();
             await store.deleteByIndex(indx);
@@ -71,11 +73,30 @@ export default function Add() {
 
     const goToUpdate = () => { router.push(`/passwords/edit/${indx}`) }
 
+    const iconStyle = StyleSheet.create({
+        infoIcon: {
+            width: 30,
+            height: 30,
+            marginTop: insets.top,
+        }
+    });
+
     return (
         <RootSiblingParent>
             <View style={styles.screen}>
                 <Bar />
-                <Title back />
+                <View style={customStyles.headerBox}>
+                    <Title back />
+
+                    <TouchableOpacity
+                        onPress={() => setShowInfoModal(true)}
+                    >
+                        <Image
+                            source={infoPng}
+                            style={iconStyle.infoIcon}
+                        />
+                    </TouchableOpacity>
+                </View>
 
                 {pass ? (
                     <>
@@ -131,10 +152,89 @@ export default function Add() {
                         </View>
                     </View>
                 </Modal>
+
+                <Modal
+                    transparent
+                    visible={showInfoModal}
+                    animationType="fade"
+                    onRequestClose={() => setShowInfoModal(false)}
+                >
+                    <View style={customStyles.modalOverlay}>
+                        <View style={customStyles.infoModalBox}>
+                            <Text style={customStyles.modalTitle}>Información del elemento</Text>
+
+                            <View style={customStyles.infoRow}>
+                                <Text style={customStyles.infoLabel}>Creado:</Text>
+                                <Text style={customStyles.infoValue}>
+                                    {pass?.createdAt ? formatDate(pass.createdAt).toLocaleString() : "-"}
+                                </Text>
+                            </View>
+
+                            <View style={customStyles.infoRow}>
+                                <Text style={customStyles.infoLabel}>Última actualización:</Text>
+                                <Text style={customStyles.infoValue}>
+                                    {pass?.updatedAt ? formatDate(pass.updatedAt).toLocaleString() : "-"}
+                                </Text>
+                            </View>
+
+                            <TouchableOpacity
+                                onPress={() => setShowInfoModal(false)}
+                                style={[styles.button, {alignSelf: "center"}]}
+                            >
+                                <Text style={styles.buttonText}>Cerrar</Text>
+                            </TouchableOpacity>
+                        </View>
+                    </View>
+                </Modal>
+
+
             </View>
         </RootSiblingParent>
     );
 }
+
+const formatDate = (dateString) => {
+    if (!dateString) return "-";
+
+    const date = new Date(dateString);
+    const now = new Date();
+
+    const diffTime = now - date;
+    const diffDays = Math.floor(diffTime / (1000 * 60 * 60 * 24));
+
+    const optionsTime = { hour: "2-digit", minute: "2-digit" };
+
+    if (
+        date.getDate() === now.getDate() &&
+        date.getMonth() === now.getMonth() &&
+        date.getFullYear() === now.getFullYear()
+    ) {
+        return `Hoy a las ${date.toLocaleTimeString([], optionsTime)}`;
+    } else if (
+        date.getDate() === now.getDate() - 1 &&
+        date.getMonth() === now.getMonth() &&
+        date.getFullYear() === now.getFullYear()
+    ) {
+        return `Ayer a las ${date.toLocaleTimeString([], optionsTime)}`;
+    } else if (diffDays < 7 && date.getFullYear() === now.getFullYear()) {
+        const dayName = date.toLocaleDateString("es-ES", { weekday: "long" });
+        return `${capitalizeFirstLetter(dayName)} a las ${date.toLocaleTimeString([], optionsTime)}`;
+    } else if (date.getFullYear() === now.getFullYear()) {
+        const day = date.getDate();
+        const month = date.toLocaleDateString("es-ES", { month: "long" });
+        return `${day} de ${capitalizeFirstLetter(month)} a las ${date.toLocaleTimeString([], optionsTime)}`;
+    } else {
+        const day = date.getDate();
+        const month = date.toLocaleDateString("es-ES", { month: "long" });
+        const year = date.getFullYear();
+        return `${day} de ${capitalizeFirstLetter(month)} del ${year} a las ${date.toLocaleTimeString([], optionsTime)}`;
+    }
+};
+
+const capitalizeFirstLetter = (string) => {
+    return string.charAt(0).toUpperCase() + string.slice(1);
+};
+
 
 // Componente de icono
 function Icon({ icon, itemName }) {
@@ -213,6 +313,10 @@ const renderPasswordField = (label, value, showPassword, setShowPassword, copyFu
 
 const customStyles = StyleSheet.create({
     heading: { ...styles.heading, color: theme.colors.primary, marginTop: 15 },
+    headerBox: {
+        flexDirection: "row",
+        justifyContent: "space-between"
+    },
     back: { width: 20, height: 20 },
     iconBox: { flexDirection: "column", alignItems: "center", justifyContent: "center" },
     icon: { marginTop: 5 },
@@ -243,4 +347,54 @@ const customStyles = StyleSheet.create({
         backgroundColor: "#1e1e1e",
         borderRadius: 10,
     },
+    infoModalBox: {
+        width: 320,
+        padding: 25,
+        backgroundColor: "#2a2a2a",
+        borderRadius: 12,
+        alignItems: "flex-start",
+        shadowColor: "#000",
+        shadowOffset: { width: 0, height: 2 },
+        shadowOpacity: 0.3,
+        shadowRadius: 5,
+        elevation: 5,
+    },
+    modalTitle: {
+        fontSize: 18,
+        fontWeight: "bold",
+        color: theme.colors.primary,
+        marginBottom: 20,
+        alignSelf: "center",
+    },
+    infoRow: {
+        flexDirection: "row",
+        justifyContent: "space-between",
+        width: "100%",
+        marginBottom: 12,
+    },
+    infoLabel: {
+        color: "#aaa",
+        fontSize: 14,
+        flex: 1,
+    },
+    infoValue: {
+        color: "#fff",
+        fontSize: 14,
+        flex: 1,
+        textAlign: "right",
+    },
+    closeButton: {
+        alignSelf: "center",
+        marginTop: 20,
+        paddingVertical: 8,
+        paddingHorizontal: 20,
+        backgroundColor: theme.colors.primary,
+        borderRadius: 8,
+    },
+    closeButtonText: {
+        color: "#1e1e1e",
+        fontWeight: "bold",
+        fontSize: 14,
+    },
+
 });
