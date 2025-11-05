@@ -11,6 +11,8 @@ import Toast from "react-native-root-toast";
 
 import { FontAwesome5, FontAwesome } from "@expo/vector-icons";
 import Store from "../utilities/store";
+import Title from "../components/cryptum";
+import Bar from "../components/bar";
 
 
 export default function Add() {
@@ -103,8 +105,9 @@ export default function Add() {
 
     return (
         <RootSiblingParent>
+            <Bar />
             <View style={styles.screen}>
-                <Text style={customStyles.heading} onPress={() => router.back()}>Cryptum</Text>
+                <Title back />
                 <Text style={customStyles.whiteHeading}>Agregar contraseña</Text>
 
                 <Text style={customStyles.label}>Nombre: <Text style={customStyles.required}>*</Text></Text>

@@ -11,7 +11,8 @@ import { styles } from "../../styles";
 import { theme } from "../../theme";
 
 import copy from "../../assets/copy.png"
-import back from "../../assets/back.png";
+import Title from "../../components/cryptum";
+import Bar from "../../components/bar";
 
 export default function Add() {
     const { indx } = useLocalSearchParams();
@@ -58,11 +59,8 @@ export default function Add() {
     return (
         <RootSiblingParent>
             <View style={styles.screen}>
-                {/* Header */}
-                <Text style={customStyles.heading} onPress={goHome}>
-                    <Image source={back} style={customStyles.back} />
-                    Cryptum
-                </Text>
+                <Bar/>
+                <Title back />
 
                 {pass ? (
                     <>

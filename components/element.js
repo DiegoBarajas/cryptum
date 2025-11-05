@@ -1,6 +1,6 @@
 import { TouchableOpacity, Text, StyleSheet, View } from "react-native";
 import { theme } from "../theme";
-import { AntDesign, FontAwesome5, FontAwesome } from "@expo/vector-icons";
+import { FontAwesome5, FontAwesome } from "@expo/vector-icons";
 
 import { useRouter } from "expo-router";
 
@@ -71,7 +71,7 @@ const customStyles = StyleSheet.create({
     letterContainer: { 
         justifyContent: "center", 
         alignItems: "center", 
-        width: 40, 
+        minWidth: 40, 
         height: 40 
     },
     letter: {

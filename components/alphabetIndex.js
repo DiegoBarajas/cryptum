@@ -43,6 +43,7 @@ export default function NinetyTenExample({ data }) {
                             <Group title={key} items={value} />
                         </View>
                     ))}
+                    <View style={styles.sep}/>
                 </ScrollView>
 
                 <View style={styles.alphabet}>
@@ -88,4 +89,7 @@ const styles = StyleSheet.create({
         marginTop: "100%",
         marginLeft: 20
     },
+    sep: {
+        marginBottom: 30
+    }
 });

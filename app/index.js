@@ -6,6 +6,7 @@ import { useEffect } from "react";
 
 import icon from "../assets/icon.png"
 import fingerprint from "../assets/fingerprint.png"
+import Bar from "../components/bar";
 
 export default function Home() {
     const router = useRouter();
@@ -24,7 +25,8 @@ export default function Home() {
 
     return (
         <View style={customStyles.screen}>
-            <Image 
+            <Bar />
+            <Image
                 style={customStyles.icon}
                 source={icon}
             />
@@ -32,7 +34,7 @@ export default function Home() {
 
             <View style={customStyles.footer}>
                 <TouchableOpacity style={customStyles.button} onPress={login}>
-                    <Image 
+                    <Image
                         style={customStyles.iconButton}
                         source={fingerprint}
                     />
@@ -43,7 +45,7 @@ export default function Home() {
                     Ingresa tu huella para comenzar
                 </Text>
             </View>
-            
+
         </View>
     );
 }
@@ -55,8 +57,8 @@ const customStyles = StyleSheet.create({
         justifyContent: "center",
     },
     icon: {
-        width: 120, 
-        height: 120
+        width: 150,
+        height: 150
     },
     heading: {
         ...styles.heading,
@@ -69,8 +71,8 @@ const customStyles = StyleSheet.create({
         textAlign: "justify",
         marginTop: 4
     },
-    iconButton: {     
-        width: 35, 
+    iconButton: {
+        width: 35,
         height: 35
     },
     button: {

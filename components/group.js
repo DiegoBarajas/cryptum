@@ -20,7 +20,8 @@ export default function Group({ title, items }) {
 
 const customStyles = StyleSheet.create({
     box: {
-        width: "100%"
+        width: "100%",
+        marginTop: 10
     },
     line: {
         width: "100%",

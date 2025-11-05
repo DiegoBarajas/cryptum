@@ -1,5 +1,5 @@
 import * as LocalAuthentication from "expo-local-authentication";
-import { Alert, Platform } from "react-native";
+import { Platform } from "react-native";
 
 export async function authenticate(promptMessage, onSuccess) {
 	if (Platform.OS === "web") {

@@ -1,4 +1,4 @@
-import { View, Text, StyleSheet, TouchableOpacity, Image } from "react-native";
+import { View, StyleSheet, TouchableOpacity, Image } from "react-native";
 import { useRouter } from "expo-router";
 import { styles } from "../../styles";
 import { theme } from "../../theme";
@@ -9,6 +9,8 @@ import { useEffect, useState } from "react";
 import Store from "../../utilities/store";
 
 import { Dimensions } from 'react-native';
+import Title from "../../components/cryptum";
+import Bar from "../../components/bar";
 const { width, height } = Dimensions.get('window');
 
 
@@ -63,7 +65,8 @@ export default function PasswordIndex() {
 
     return (
         <View style={styles.screen}>
-            <Text style={customStyles.heading}>Cryptum</Text>
+            <Bar />
+            <Title />
 
             <AlphabeticalIndex data={groups} />
 
@@ -92,7 +95,7 @@ const customStyles = StyleSheet.create({
         ...styles.button,
         position: "absolute",
         bottom: width * 0.175,
-        right: width * 0.15,
+        right: width * 0.13,
         width: 65,
         height: 65,
         borderRadius: 100
