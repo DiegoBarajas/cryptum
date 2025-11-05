@@ -51,7 +51,10 @@ export default function Edit() {
 
         const store = new Store();
         await store.init();
-        await store.updateByIndex(indx, password);
+        await store.updateByIndex(indx, {
+            ...password,
+            updatedAt: Date.now()
+        });
 
         Toast.show("Elemento actualizado", {
             duration: Toast.durations.SHORT,

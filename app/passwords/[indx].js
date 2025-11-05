@@ -184,18 +184,14 @@ const renderPasswordField = (label, value, showPassword, setShowPassword, copyFu
         {value ? (
             <View style={customStyles.copyBox}>
                 <TouchableOpacity
-                    onPress={() => {
-                        if (showPassword) copyFunc(value);
-                    }} style={{ marginRight: 10 }}>
+                    onPress={() => copyFunc(value)} style={{ marginRight: 10 }}>
                     <Image source={copy}
                         style={customStyles.copy}
                     />
                 </TouchableOpacity>
                 <TouchableOpacity
                     style={{ flex: 1 }}
-                    onPress={() => {
-                        if (showPassword) copyFunc(value);
-                    }}
+                    onPress={() => copyFunc(value)}
                     activeOpacity={0.7}
                 >
                     <Text style={[styles.text]} numberOfLines={1} ellipsizeMode="tail">

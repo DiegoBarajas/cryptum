@@ -45,7 +45,10 @@ export default function Add() {
         const store = new Store();
         await store.init();
 
-        store.addPassword(password);
+        store.addPassword({
+            ...password,
+            createdAt: Date.now()
+        });
 
         setPassword({
             name: "",
