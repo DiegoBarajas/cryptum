@@ -8,6 +8,10 @@ import addImg from "../../assets/add.png";
 import { useEffect, useState } from "react";
 import Store from "../../utilities/store";
 
+import { Dimensions } from 'react-native';
+const { width, height } = Dimensions.get('window');
+
+
 export default function PasswordIndex() {
     const router = useRouter();
 
@@ -77,10 +81,10 @@ const customStyles = StyleSheet.create({
     addButton: {
         ...styles.button,
         position: "absolute",
-        bottom: 50,
-        right: 50,
-        width: 60,
-        height: 60,
+        bottom: width * 0.175,
+        right: width * 0.15,
+        width: 65,
+        height: 65,
         borderRadius: 100
     },
     addImage: {

@@ -29,7 +29,7 @@ export default function NinetyTenExample({ data }) {
                     showsVerticalScrollIndicator={false}
                     ref={scrollViewRef}
                 >
-                    {data.length === 0 && (
+                    {Object.entries(data).length === 0 && (
                         <Text style={styles.textNoPass}>
                             No hay contraseñas guardadas.
                         </Text>
@@ -85,6 +85,7 @@ const styles = StyleSheet.create({
     textNoPass: {
         color: theme.colors.textPrimary,
         alignSelf: "center",
-        marginTop: 100,
+        marginTop: "100%",
+        marginLeft: 20
     },
 });

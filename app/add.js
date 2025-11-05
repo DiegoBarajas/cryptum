@@ -40,7 +40,7 @@ export default function Add() {
         await store.init();
 
         store.addPassword(password);
-        
+
         setPassword({
             name: "",
             email: "",
@@ -104,7 +104,7 @@ export default function Add() {
     return (
         <RootSiblingParent>
             <View style={styles.screen}>
-                <Text style={customStyles.heading}>Cryptum</Text>
+                <Text style={customStyles.heading} onPress={() => router.back()}>Cryptum</Text>
                 <Text style={customStyles.whiteHeading}>Agregar contraseña</Text>
 
                 <Text style={customStyles.label}>Nombre: <Text style={customStyles.required}>*</Text></Text>
@@ -137,20 +137,21 @@ export default function Add() {
                 />
 
                 <Text style={customStyles.label}>Icono:</Text>
-                <DropDownPicker
-                    open={open}
-                    value={password.icon}
-                    items={items}
-                    setOpen={setOpen}
-                    setValue={(callback) =>
+                <DropDownPicker 
+                    open={open} 
+                    value={password.icon} 
+                    items={items} 
+                    setOpen={setOpen} 
+                    setValue={(callback) => 
                         setPassword({ ...password, icon: callback(password.icon) })
-                    }
-                    style={customStyles.input}
-                    textStyle={{ color: theme.colors.textPrimary }}
-                    dropDownContainerStyle={{ backgroundColor: "#1e1e1e" }}
-                    arrowIconStyle={{ tintColor: theme.colors.primary }}
-                    tickIconStyle={{ tintColor: theme.colors.primary }}
+                    } 
+                    style={customStyles.input} 
+                    textStyle={{ color: theme.colors.textPrimary }} 
+                    dropDownContainerStyle={{ backgroundColor: "#1e1e1e", height: 500 }} 
+                    arrowIconStyle={{ tintColor: theme.colors.primary }} 
+                    tickIconStyle={{ tintColor: theme.colors.primary }} 
                 />
+
 
                 <View style={customStyles.sep} />
 
@@ -207,6 +208,6 @@ const customStyles = StyleSheet.create({
         height: 40,
     },
     sep: {
-        marginTop: 50
+        marginTop: 75
     }
 });

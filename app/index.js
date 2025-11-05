@@ -60,7 +60,8 @@ const customStyles = StyleSheet.create({
     },
     heading: {
         ...styles.heading,
-        alignSelf: "center"
+        alignSelf: "center",
+        marginTop: 10
     },
     text: {
         ...styles.secondaryText,
