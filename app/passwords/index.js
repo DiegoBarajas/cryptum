@@ -237,7 +237,7 @@ export default function PasswordIndex() {
                 </TouchableOpacity>
             </View>
 
-            <AlphabeticalIndex data={currentGroups} />
+            <AlphabeticalIndex data={currentGroups} totalElements={Object.keys(groups).length}/>
 
             <TouchableOpacity style={customStyles.addButton} onPress={addElement}>
                 <Image style={customStyles.addImage} source={addImg} />

@@ -1,14 +1,19 @@
 import { View, Text, TouchableOpacity, StyleSheet, Image } from "react-native";
-import { styles } from "../styles";
+import { useSafeAreaInsets } from "react-native-safe-area-context";
+import packageJson from "../package.json"
 import { useRouter } from "expo-router";
-import { authenticate } from "../utilities/auth"
+import Bar from "../components/bar";
+import { styles } from "../styles";
 import { useEffect } from "react";
+
+import { authenticate } from "../utilities/auth"
 
 import icon from "../assets/icon.png"
 import fingerprint from "../assets/fingerprint.png"
-import Bar from "../components/bar";
 
 export default function Home() {
+    const insets = useSafeAreaInsets();
+
     const router = useRouter();
 
     useEffect(() => {
@@ -32,7 +37,7 @@ export default function Home() {
             />
             <Text style={customStyles.heading}>Cryptum</Text>
 
-            <View style={customStyles.footer}>
+            <View style={[customStyles.footer, { bottom: insets.bottom + 25 }]}>
                 <TouchableOpacity style={customStyles.button} onPress={login}>
                     <Image
                         style={customStyles.iconButton}
@@ -45,6 +50,8 @@ export default function Home() {
                     Ingresa tu huella para comenzar
                 </Text>
             </View>
+
+            <Text style={[styles.secondaryText, {fontSize: 12, position: "absolute", bottom: insets.bottom, right: 15,  alignSelf: "flex-end"}]}>vBeta {packageJson.version}</Text>
 
         </View>
     );
@@ -82,7 +89,6 @@ const customStyles = StyleSheet.create({
     },
 
     footer: {
-        position: "absolute",
-        bottom: 70
+        position: "absolute"
     }
 })

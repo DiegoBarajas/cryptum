@@ -5,7 +5,7 @@ import { theme } from "../theme";
 import { useSafeAreaInsets } from "react-native-safe-area-context";
 
 
-export default function NinetyTenExample({ data }) {
+export default function AlphabetIndex({ data, totalElements=0 }) {
     const insets = useSafeAreaInsets();
     const alphabet = "#ABCDEFGHIJKLMNÑOPQRSTUVWXYZ";
 
@@ -66,7 +66,11 @@ export default function NinetyTenExample({ data }) {
                 >
                     {Object.entries(data).length === 0 && (
                         <Text style={styles.textNoPass}>
-                            No hay contraseñas guardadas.
+                            {
+                                totalElements > 0 
+                                    ? "No hay coincidencias con la búsqueda."
+                                    : "No hay contraseñas guardadas."        
+                            }
                         </Text>
                     )}
 
