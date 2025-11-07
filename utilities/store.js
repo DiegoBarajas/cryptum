@@ -32,6 +32,22 @@ export default class Store {
 
     async getAll() {
         const stored = await this.getAllRaw();
+        /* TEMP */
+        if(stored) {
+            const newStored = [];
+
+            JSON.parse(stored).map((s, index) => {
+                const newElement = {...s}
+                if(newElement.username == null)
+                    newElement.username = s.email;
+                delete newElement.email;
+                newStored.push(newElement);
+            });
+
+            this.setAll(newStored);
+        }
+        /* TEMP */
+
         return stored ? JSON.parse(stored) : [];
     }
 

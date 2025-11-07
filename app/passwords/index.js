@@ -41,6 +41,7 @@ export default function PasswordIndex() {
             const passwords = await store.getAll();
 
             const groups = {};
+
             passwords.forEach((item, indx) => {
                 if (!item.name || typeof item.name !== "string") return;
 
@@ -52,20 +53,31 @@ export default function PasswordIndex() {
                 groups[key].push(item);
             });
 
+            Object.keys(groups).forEach((key) => {
+                groups[key].sort((a, b) => a.name.localeCompare(b.name, "es", { sensitivity: "base" }));
+            });
+
             const ordered = {};
-            if (groups["#"]) ordered["#"] = groups["#"];
+            if (groups["#"]) ordered["#"] = groups["#"]; 
+
             Object.keys(groups)
                 .filter((k) => k !== "#")
                 .sort()
                 .forEach((k) => (ordered[k] = groups[k]));
+
             setGroups(ordered);
             setCurrentGroups(ordered);
         };
+
         getGroups();
     }, []);
 
+
     useEffect(() => {
-        if (!searchText || searchText.trim() === "") setCurrentGroups(groups);
+        if (!searchText || searchText.trim() === "") {
+            setCurrentGroups(groups);
+            return;
+        }
 
         const lowerValue = searchText.toLowerCase();
         const filtered = {};
@@ -76,12 +88,15 @@ export default function PasswordIndex() {
             );
 
             if (matches.length > 0) {
-                filtered[key] = matches;
+                filtered[key] = matches.sort((a, b) =>
+                    a.name.localeCompare(b.name, "es", { sensitivity: "base" })
+                );
             }
         });
 
         setCurrentGroups(filtered);
     }, [searchText]);
+
 
     const addElement = () => router.push("/add");
 
@@ -237,7 +252,7 @@ export default function PasswordIndex() {
                 </TouchableOpacity>
             </View>
 
-            <AlphabeticalIndex data={currentGroups} totalElements={Object.keys(groups).length}/>
+            <AlphabeticalIndex data={currentGroups} totalElements={Object.keys(groups).length} />
 
             <TouchableOpacity style={customStyles.addButton} onPress={addElement}>
                 <Image style={customStyles.addImage} source={addImg} />

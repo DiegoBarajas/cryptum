@@ -1,4 +1,4 @@
-import { View, Text, StyleSheet, TouchableOpacity, Image, Modal } from "react-native";
+import { ScrollView, View, Text, StyleSheet, TouchableOpacity, Image, Modal } from "react-native";
 import { useSafeAreaInsets } from "react-native-safe-area-context";
 import { FontAwesome5, FontAwesome } from "@expo/vector-icons";
 import { RootSiblingParent } from "react-native-root-siblings";
@@ -107,8 +107,9 @@ export default function Add() {
                         </View>
 
                         {/* Campos */}
-                        {renderCopyField("Correo/usuario", pass.email, copyToClipboard)}
+                        {renderCopyField("Correo/usuario", pass.username, copyToClipboard)}
                         {renderPasswordField("Contraseña", pass.password, showPassword, setShowPassword, copyToClipboard)}
+                        {renderNoteField(pass.note)}
 
                         {/* Botones */}
                         <TouchableOpacity
@@ -140,18 +141,29 @@ export default function Add() {
                 >
                     <View style={customStyles.modalOverlay}>
                         <View style={customStyles.modalBox}>
-                            <Text style={styles.text}>¿Estás seguro de que quieres eliminar este elemento?</Text>
-                            <View style={{ flexDirection: "row", justifyContent: "space-between", marginTop: 20 }}>
-                                <TouchableOpacity onPress={() => setShowConfirm(false)}>
-                                    <Text style={{ color: theme.colors.primary }}>Cancelar</Text>
+                            <Text style={[styles.text, { textAlign: "center", marginBottom: 25 }]}>
+                                ¿Estás seguro de que quieres eliminar este elemento?
+                            </Text>
+
+                            <View style={{ width: "100%", alignItems: "center" }}>
+                                <TouchableOpacity
+                                    onPress={handleDelete}
+                                    style={[styles.button, { backgroundColor: "#ff4444", width: "90%", marginBottom: 10 }]}
+                                >
+                                    <Text style={styles.buttonText}>Eliminar</Text>
                                 </TouchableOpacity>
-                                <TouchableOpacity onPress={handleDelete}>
-                                    <Text style={{ color: "#ff4444" }}>Eliminar</Text>
+
+                                <TouchableOpacity
+                                    onPress={() => setShowConfirm(false)}
+                                    style={[styles.button, { width: "90%" }]}
+                                >
+                                    <Text style={styles.buttonText}>Cancelar</Text>
                                 </TouchableOpacity>
                             </View>
                         </View>
                     </View>
                 </Modal>
+
 
                 <Modal
                     transparent
@@ -179,7 +191,7 @@ export default function Add() {
 
                             <TouchableOpacity
                                 onPress={() => setShowInfoModal(false)}
-                                style={[styles.button, {alignSelf: "center"}]}
+                                style={[styles.button, { alignSelf: "center" }]}
                             >
                                 <Text style={styles.buttonText}>Cerrar</Text>
                             </TouchableOpacity>
@@ -311,6 +323,32 @@ const renderPasswordField = (label, value, showPassword, setShowPassword, copyFu
     </View>
 );
 
+// Campo de nota (solo si existe)
+const renderNoteField = (note) => {
+    if (!note) return null; // no mostrar si no hay nota
+
+    return (
+        <View style={{ marginTop: 15 }}>
+            <Text style={customStyles.label}>Nota:</Text>
+            <View style={customStyles.noteBox}>
+                <ScrollView
+                    style={{ maxHeight: 120 }}
+                    nestedScrollEnabled={true}
+                    showsVerticalScrollIndicator={true}
+                >
+                    <Text
+                        style={[styles.text, { lineHeight: 20 }]}
+                        selectable={true} // permite seleccionar texto
+                    >
+                        {note}
+                    </Text>
+                </ScrollView>
+            </View>
+        </View>
+    );
+};
+
+
 const customStyles = StyleSheet.create({
     heading: { ...styles.heading, color: theme.colors.primary, marginTop: 15 },
     headerBox: {
@@ -395,6 +433,13 @@ const customStyles = StyleSheet.create({
         color: "#1e1e1e",
         fontWeight: "bold",
         fontSize: 14,
+    },
+    noteBox: {
+        backgroundColor: "#1e1e1e",
+        borderRadius: 10,
+        paddingVertical: 10,
+        paddingHorizontal: 12,
+        marginTop: 5,
     },
 
 });

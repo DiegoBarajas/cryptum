@@ -21,11 +21,9 @@ export default function Add() {
     const insets = useSafeAreaInsets();
 
     const router = useRouter();
-    const [iconModal, setIconModal] = useState(false);
-    const [open, setOpen] = useState(false);
     const [password, setPassword] = useState({
         name: "",
-        email: "",
+        username: "",
         password: "",
         icon: ""
     });
@@ -52,9 +50,10 @@ export default function Add() {
 
         setPassword({
             name: "",
-            email: "",
+            username: "",
             password: "",
-            icon: ""
+            icon: "",
+            note: ""
         });
 
         router.back();
@@ -120,13 +119,13 @@ export default function Add() {
                     onChangeText={(value) => setPassword({ ...password, name: value })}
                 />
 
-                <Text style={customStyles.label}>Correo/usuario:</Text>
+                <Text style={customStyles.label}>Nombre de usuario:</Text>
                 <TextInput
                     style={customStyles.input}
                     placeholder="Ej. john@doe.com"
                     placeholderTextColor="#aaa"
-                    value={password.email}
-                    onChangeText={(value) => setPassword({ ...password, email: value })}
+                    value={password.username}
+                    onChangeText={(value) => setPassword({ ...password, username: value })}
                     autoCapitalize="none"
                 />
 
@@ -138,6 +137,17 @@ export default function Add() {
                     value={password.password}
                     onChangeText={(value) => setPassword({ ...password, password: value })}
                     autoCapitalize="none"
+                />
+
+                <Text style={customStyles.label}>Nota:</Text>
+                <TextInput
+                    style={[customStyles.input, {height: 100, textAlignVertical: 'top'}]}
+                    placeholder="Ej. 1234567"
+                    placeholderTextColor="#aaa"
+                    value={password.note}
+                    onChangeText={(value) => setPassword({ ...password, note: value })}
+                    multiline={true}
+                    numberOfLines={4}
                 />
 
                 <Text style={customStyles.label}>Icono:</Text>

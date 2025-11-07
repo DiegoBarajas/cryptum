@@ -17,7 +17,7 @@ export default function Element({ item }) {
                         numberOfLines={1}
                         ellipsizeMode="tail"
                     >{item.name}</Text>
-                    <Text style={customStyles.subtitle}>{item.email}</Text>
+                    <Text style={customStyles.subtitle}>{item.username}</Text>
                 </View>
             </View>
         </TouchableOpacity>

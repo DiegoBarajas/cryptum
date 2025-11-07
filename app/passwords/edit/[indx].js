@@ -20,12 +20,12 @@ export default function Edit() {
     const router = useRouter();
     const { indx } = useLocalSearchParams();
 
-    const [open, setOpen] = useState(false);
     const [password, setPassword] = useState({
         name: "",
-        email: "",
+        username: "",
         password: "",
-        icon: ""
+        icon: "",
+        note: ""
     });
 
     // Cargar los datos existentes
@@ -88,13 +88,13 @@ export default function Edit() {
                     onChangeText={(value) => setPassword({ ...password, name: value })}
                 />
 
-                <Text style={customStyles.label}>Correo/usuario:</Text>
+                <Text style={customStyles.label}>Nombre de usuario:</Text>
                 <TextInput
                     style={customStyles.input}
                     placeholder="Ej. john@doe.com"
                     placeholderTextColor="#aaa"
-                    value={password.email}
-                    onChangeText={(value) => setPassword({ ...password, email: value })}
+                    value={password.username}
+                    onChangeText={(value) => setPassword({ ...password, username: value })}
                     autoCapitalize="none"
                 />
 
@@ -106,6 +106,17 @@ export default function Edit() {
                     value={password.password}
                     onChangeText={(value) => setPassword({ ...password, password: value })}
                     autoCapitalize="none"
+                />
+
+                <Text style={customStyles.label}>Nota:</Text>
+                <TextInput
+                    style={[customStyles.input, {height: 100, textAlignVertical: 'top'}]}
+                    placeholder="Ej. 1234567"
+                    placeholderTextColor="#aaa"
+                    value={password.note}
+                    onChangeText={(value) => setPassword({ ...password, note: value })}
+                    multiline={true}
+                    numberOfLines={4}
                 />
 
                 <Text style={customStyles.label}>Icono:</Text>

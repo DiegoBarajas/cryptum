@@ -13,6 +13,12 @@ import { theme } from "../theme";
 
 const icons = [
     { label: "Automático", value: "", icon: () => <FontAwesome5 name="sync" size={20} color={theme.colors.primary} /> },
+    
+    { label: "DUMMI", value: "", icon: () => <FontAwesome name="" size={20} color={theme.colors.primary} /> },
+    { label: "DUMMI", value: "", icon: () => <FontAwesome name="" size={20} color={theme.colors.primary} /> },
+    { label: "DUMMI", value: "", icon: () => <FontAwesome name="" size={20} color={theme.colors.primary} /> },
+    { label: "DUMMI", value: "", icon: () => <FontAwesome name="" size={20} color={theme.colors.primary} /> },
+    
     { label: "Advertencia", value: "FontAwesome:warning", icon: () => <FontAwesome name="warning" size={20} color={theme.colors.primary} /> },
     { label: "Airbnb", value: "FontAwesome5:airbnb", icon: () => <FontAwesome5 name="airbnb" size={20} color={theme.colors.primary} /> },
     { label: "Alcancia", value: "FontAwesome5:piggy-bank", icon: () => <FontAwesome5 name="piggy-bank" size={20} color={theme.colors.primary} /> },
