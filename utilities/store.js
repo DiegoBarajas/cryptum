@@ -4,6 +4,10 @@ import { Platform } from "react-native";
 const isWeb = Platform.OS === "web";
 
 export default class Store {
+    constructor(name) {
+        this.name = name;
+    }
+
     async init() {
         const passwords = await this.getAllRaw();
         if (!passwords) {
@@ -14,9 +18,9 @@ export default class Store {
     // Obtiene los datos crudos (string o null)
     async getAllRaw() {
         if (isWeb) {
-            return localStorage.getItem("passwords");
+            return localStorage.getItem(this.name);
         } else {
-            return await SecureStore.getItemAsync("passwords");
+            return await SecureStore.getItemAsync(this.name);
         }
     }
 
@@ -24,9 +28,9 @@ export default class Store {
     async setAll(data) {
         const value = JSON.stringify(data);
         if (isWeb) {
-            localStorage.setItem("passwords", value);
+            localStorage.setItem(this.name, value);
         } else {
-            await SecureStore.setItemAsync("passwords", value);
+            await SecureStore.setItemAsync(this.name, value);
         }
     }
 

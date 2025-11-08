@@ -1,6 +1,6 @@
 import { TouchableOpacity, Text, StyleSheet, View } from "react-native";
 import { theme } from "../theme";
-import { FontAwesome5, FontAwesome } from "@expo/vector-icons";
+import { FontAwesome5, FontAwesome, MaterialCommunityIcons } from "@expo/vector-icons";
 
 import { useRouter } from "expo-router";
 
@@ -17,11 +17,15 @@ export default function Element({ item }) {
                         numberOfLines={1}
                         ellipsizeMode="tail"
                     >{item.name}</Text>
-                    <Text style={customStyles.subtitle}>{item.username}</Text>
+                    <Text style={customStyles.subtitle}>{showSubtext(item.username, item.password)}</Text>
                 </View>
             </View>
         </TouchableOpacity>
     );
+}
+
+function showSubtext(username, password=""){
+    return username ? username :  "*".repeat(password.length)
 }
 
 function Icon({ icon, itemName }) {
@@ -43,6 +47,15 @@ function Icon({ icon, itemName }) {
                 color={theme.colors.primary}
                 style={customStyles.icon} />
         )
+    else if (type === "MaterialCommunityIcons")
+            return ( 
+                <MaterialCommunityIcons 
+                    name={name} 
+                    size={60} 
+                    color={theme.colors.primary} 
+                    style={customStyles.icon} 
+                />
+            )
     else
         return (
             <View style={customStyles.letterContainer}>

@@ -1,5 +1,5 @@
 import { useState } from "react";
-import { FontAwesome5, FontAwesome } from "@expo/vector-icons";
+import { FontAwesome5, FontAwesome, MaterialCommunityIcons } from "@expo/vector-icons";
 
 import {
     View,
@@ -32,23 +32,45 @@ const icons = [
     { label: "Banco", value: "FontAwesome:bank", icon: () => <FontAwesome name="bank" size={20} color={theme.colors.primary} /> },
     { label: "Base de datos", value: "FontAwesome:database", icon: () => <FontAwesome name="database" size={20} color={theme.colors.primary} /> },
     { label: "Bolsa de compra", value: "FontAwesome5:shopping-bag", icon: () => <FontAwesome5 name="shopping-bag" size={20} color={theme.colors.primary} /> },
+    
+    { label: "Buzón abierto", value: "MaterialCommunityIcons:mailbox-open", icon: () => <MaterialCommunityIcons name="mailbox-open" size={20} color={theme.colors.primary} /> },
+    { label: "Buzón cerrado", value: "MaterialCommunityIcons:mailbox", icon: () => <MaterialCommunityIcons name="mailbox" size={20} color={theme.colors.primary} /> },
+    { label: "Buzón de voz", value: "MaterialCommunityIcons:voicemail", icon: () => <MaterialCommunityIcons name="voicemail" size={20} color={theme.colors.primary} /> },
+
+    
     { label: "Cafe", value: "FontAwesome:coffee", icon: () => <FontAwesome name="coffee" size={20} color={theme.colors.primary} /> },
     { label: "Caja", value: "FontAwesome:archive", icon: () => <FontAwesome name="archive" size={20} color={theme.colors.primary} /> },
     { label: "Camion", value: "FontAwesome:truck", icon: () => <FontAwesome name="truck" size={20} color={theme.colors.primary} /> },
     { label: "Canasta de compra", value: "FontAwesome5:shopping-basket", icon: () => <FontAwesome5 name="shopping-basket" size={20} color={theme.colors.primary} /> },
+
+    { label: "Candado", value: "MaterialCommunityIcons:lock", icon: () => <MaterialCommunityIcons name="lock" size={20} color={theme.colors.primary} /> },
+
     { label: "Carrito de compra", value: "FontAwesome5:shopping-cart", icon: () => <FontAwesome5 name="shopping-cart" size={20} color={theme.colors.primary} /> },
     { label: "Carpeta", value: "FontAwesome:folder", icon: () => <FontAwesome name="folder" size={20} color={theme.colors.primary} /> },
     { label: "Carro", value: "FontAwesome:car", icon: () => <FontAwesome name="car" size={20} color={theme.colors.primary} /> },
+        
+    { label: "Casa", value: "MaterialCommunityIcons:home", icon: () => <MaterialCommunityIcons name="home" size={20} color={theme.colors.primary} /> },
+
     { label: "Cartera", value: "FontAwesome5:wallet", icon: () => <FontAwesome5 name="wallet" size={20} color={theme.colors.primary} /> },
     { label: "Circulo", value: "FontAwesome:circle", icon: () => <FontAwesome name="circle" size={20} color={theme.colors.primary} /> },
     { label: "Clip", value: "FontAwesome5:paperclip", icon: () => <FontAwesome5 name="paperclip" size={20} color={theme.colors.primary} /> },
     { label: "Código", value: "FontAwesome:code", icon: () => <FontAwesome name="code" size={20} color={theme.colors.primary} /> },
+
+    { label: "Cono de transito", value: "MaterialCommunityIcons:traffic-cone", icon: () => <MaterialCommunityIcons name="traffic-cone" size={20} color={theme.colors.primary} /> },
+
+
     { label: "Corazon", value: "FontAwesome:heart", icon: () => <FontAwesome name="heart" size={20} color={theme.colors.primary} /> },
     { label: "Correo", value: "FontAwesome:envelope", icon: () => <FontAwesome name="envelope" size={20} color={theme.colors.primary} /> },
+    
+    
     { label: "Cuadros", value: "FontAwesome:th-large", icon: () => <FontAwesome name="th-large" size={20} color={theme.colors.primary} /> },
     { label: "Cuadros", value: "FontAwesome:th", icon: () => <FontAwesome name="th" size={20} color={theme.colors.primary} /> },
     { label: "Cubiertos", value: "FontAwesome:cutlery", icon: () => <FontAwesome name="cutlery" size={20} color={theme.colors.primary} /> },
     { label: "Cuchara", value: "FontAwesome:spoon", icon: () => <FontAwesome name="spoon" size={20} color={theme.colors.primary} /> },
+    
+    { label: "Debian", value: "MaterialCommunityIcons:debian", icon: () => <MaterialCommunityIcons name="debian" size={20} color={theme.colors.primary} /> },
+
+
     { label: "Desktop", value: "FontAwesome5:desktop", icon: () => <FontAwesome5 name="desktop" size={20} color={theme.colors.primary} /> },
     { label: "Dinero", value: "FontAwesome:money", icon: () => <FontAwesome name="money" size={20} color={theme.colors.primary} /> },
     { label: "Dinero", value: "FontAwesome:dollar", icon: () => <FontAwesome name="dollar" size={20} color={theme.colors.primary} /> },
@@ -65,10 +87,12 @@ const icons = [
     { label: "Inbox", value: "FontAwesome:inbox", icon: () => <FontAwesome name="inbox" size={20} color={theme.colors.primary} /> },
     { label: "Industría", value: "FontAwesome:industry", icon: () => <FontAwesome name="industry" size={20} color={theme.colors.primary} /> },
     { label: "Información", value: "FontAwesome:info", icon: () => <FontAwesome name="info" size={20} color={theme.colors.primary} /> },
-    { label: "Instituto", value: "FontAwesome:institution", icon: () => <FontAwesome name="institution" size={20} color={theme.colors.primary} /> },
     { label: "Instagram", value: "FontAwesome5:instagram", icon: () => <FontAwesome5 name="instagram" size={20} color={theme.colors.primary} /> },
     { label: "Java", value: "FontAwesome:java", icon: () => <FontAwesome5 name="java" size={20} color={theme.colors.primary} /> },
     { label: "Jira", value: "FontAwesome:jira", icon: () => <FontAwesome5 name="jira" size={20} color={theme.colors.primary} /> },
+
+    { label: "Javascript", value: "MaterialCommunityIcons:language-javascript", icon: () => <MaterialCommunityIcons name="language-javascript" size={20} color={theme.colors.primary} /> },
+
     { label: "Lapiz", value: "FontAwesome:pencil", icon: () => <FontAwesome name="pencil" size={20} color={theme.colors.primary} /> },
     { label: "Laptop", value: "FontAwesome:laptop", icon: () => <FontAwesome5 name="laptop" size={20} color={theme.colors.primary} /> },
     { label: "Legal", value: "FontAwesome:legal", icon: () => <FontAwesome name="legal" size={20} color={theme.colors.primary} /> },
@@ -76,6 +100,7 @@ const icons = [
     { label: "LinkedIn", value: "FontAwesome:linkedin", icon: () => <FontAwesome name="linkedin" size={20} color={theme.colors.primary} /> },
     { label: "Linux", value: "FontAwesome5:linux", icon: () => <FontAwesome name="linux" size={20} color={theme.colors.primary} /> },
     { label: "Lista", value: "FontAwesome:th-list", icon: () => <FontAwesome name="th-list" size={20} color={theme.colors.primary} /> },
+    { label: "Llave", value: "MaterialCommunityIcons:wrench", icon: () => <MaterialCommunityIcons name="wrench" size={20} color={theme.colors.primary} /> },
     { label: "Maletín", value: "FontAwesome:briefcase", icon: () => <FontAwesome name="briefcase" size={20} color={theme.colors.primary} /> },
     { label: "Mapa", value: "FontAwesome:map", icon: () => <FontAwesome name="map" size={20} color={theme.colors.primary} /> },
     { label: "Mastercard", value: "FontAwesome5:cc-mastercard", icon: () => <FontAwesome5 name="cc-mastercard" size={20} color={theme.colors.primary} /> },
@@ -84,6 +109,10 @@ const icons = [
     { label: "Moto", value: "FontAwesome5:motorcycle", icon: () => <FontAwesome5 name="motorcycle" size={20} color={theme.colors.primary} /> },
     { label: "Mouse", value: "FontAwesome5:mouse", icon: () => <FontAwesome5 name="mouse" size={20} color={theme.colors.primary} /> },
     { label: "Musica", value: "FontAwesome:music", icon: () => <FontAwesome name="music" size={20} color={theme.colors.primary} /> },
+   
+    { label: "Nintendo Switch", value: "MaterialCommunityIcons:nintendo-switch", icon: () => <MaterialCommunityIcons name="nintendo-switch" size={20} color={theme.colors.primary} /> },
+    { label: "Netflix", value: "MaterialCommunityIcons:netflix", icon: () => <MaterialCommunityIcons name="netflix" size={20} color={theme.colors.primary} /> },
+
     { label: "Nota", value: "FontAwesome:sticky-note", icon: () => <FontAwesome name="sticky-note" size={20} color={theme.colors.primary} /> },
     { label: "Nube", value: "FontAwesome:cloud", icon: () => <FontAwesome name="cloud" size={20} color={theme.colors.primary} /> },
     { label: "palette", value: "FontAwesome5:palette", icon: () => <FontAwesome5 name="palette" size={20} color={theme.colors.primary} /> },
@@ -92,11 +121,18 @@ const icons = [
     { label: "Pelicula", value: "FontAwesome:video-camera", icon: () => <FontAwesome name="video-camera" size={20} color={theme.colors.primary} /> },
     { label: "Pincel", value: "FontAwesome:paint-brush", icon: () => <FontAwesome name="paint-brush" size={20} color={theme.colors.primary} /> },
     { label: "Pregunta", value: "FontAwesome:question", icon: () => <FontAwesome name="question" size={20} color={theme.colors.primary} /> },
-    { label: "Puerta", value: "FontAwesome5:door-closed", icon: () => <FontAwesome5 name="door-closed" size={20} color={theme.colors.primary} /> },
-    { label: "Puerta abierta", value: "FontAwesome5:door-open", icon: () => <FontAwesome5 name="door-open" size={20} color={theme.colors.primary} /> },
+    { label: "Puerta", value: "MaterialCommunityIcons:door", icon: () => <MaterialCommunityIcons name="door" size={20} color={theme.colors.primary} /> },
+    
+    { label: "Puerta abierta", value: "MaterialCommunityIcons:door-open", icon: () => <MaterialCommunityIcons name="door-open" size={20} color={theme.colors.primary} /> },
     { label: "Python", value: "FontAwesome5:python", icon: () => <FontAwesome5 name="python" size={20} color={theme.colors.primary} /> },
     { label: "Reddit", value: "FontAwesome:reddit", icon: () => <FontAwesome name="reddit" size={20} color={theme.colors.primary} /> },
     { label: "Regalo", value: "FontAwesome:gift", icon: () => <FontAwesome name="gift" size={20} color={theme.colors.primary} /> },
+    
+    { label: "Reloj", value: "MaterialCommunityIcons:watch", icon: () => <MaterialCommunityIcons name="watch" size={20} color={theme.colors.primary} /> },
+    { label: "Reloj", value: "MaterialCommunityIcons:watch-variant", icon: () => <MaterialCommunityIcons name="watch-variant" size={20} color={theme.colors.primary} /> },
+    { label: "Router", value: "MaterialCommunityIcons:router-network", icon: () => <MaterialCommunityIcons name="router-network" size={20} color={theme.colors.primary} /> },
+    
+
     { label: "Servidor", value: "FontAwesome5:server", icon: () => <FontAwesome5 name="server" size={20} color={theme.colors.primary} /> },
     { label: "Spotify", value: "FontAwesome:spotify", icon: () => <FontAwesome name="spotify" size={20} color={theme.colors.primary} /> },
     { label: "Steam", value: "FontAwesome:steam", icon: () => <FontAwesome name="steam" size={20} color={theme.colors.primary} /> },
@@ -106,10 +142,19 @@ const icons = [
     { label: "Taxi", value: "FontAwesome5:taxi", icon: () => <FontAwesome5 name="taxi" size={20} color={theme.colors.primary} /> },
     { label: "Telefono", value: "FontAwesome:phone", icon: () => <FontAwesome name="phone" size={20} color={theme.colors.primary} /> },
     { label: "Telegram", value: "FontAwesome:telegram", icon: () => <FontAwesome name="telegram" size={20} color={theme.colors.primary} /> },
+
+    { label: "Televisión", value: "MaterialCommunityIcons:television", icon: () => <MaterialCommunityIcons name="television" size={20} color={theme.colors.primary} /> },
+    { label: "Televisión", value: "MaterialCommunityIcons:television-classic", icon: () => <MaterialCommunityIcons name="television-classic" size={20} color={theme.colors.primary} /> },
+
+
+
     { label: "Terminal", value: "FontAwesome:terminal", icon: () => <FontAwesome name="terminal" size={20} color={theme.colors.primary} /> },
     { label: "Tienda", value: "FontAwesome5:store", icon: () => <FontAwesome5 name="store" size={20} color={theme.colors.primary} /> },
     { label: "Twitch", value: "FontAwesome5:twitch", icon: () => <FontAwesome5 name="twitch" size={20} color={theme.colors.primary} /> },
     { label: "Twitter", value: "FontAwesome5:twitter", icon: () => <FontAwesome5 name="twitter" size={20} color={theme.colors.primary} /> },
+    
+    { label: "Ubuntu", value: "MaterialCommunityIcons:ubuntu", icon: () => <MaterialCommunityIcons name="ubuntu" size={20} color={theme.colors.primary} /> },
+
     { label: "USB", value: "FontAwesome5:usb", icon: () => <FontAwesome5 name="usb" size={20} color={theme.colors.primary} /> },
     { label: "Videojuego", value: "FontAwesome:gamepad", icon: () => <FontAwesome name="gamepad" size={20} color={theme.colors.primary} /> },
     { label: "Visa", value: "FontAwesome5:cc-visa", icon: () => <FontAwesome5 name="cc-visa" size={20} color={theme.colors.primary} /> },

@@ -1,6 +1,6 @@
 import { ScrollView, View, Text, StyleSheet, TouchableOpacity, Image, Modal } from "react-native";
 import { useSafeAreaInsets } from "react-native-safe-area-context";
-import { FontAwesome5, FontAwesome } from "@expo/vector-icons";
+import { FontAwesome5, FontAwesome, MaterialCommunityIcons } from "@expo/vector-icons";
 import { RootSiblingParent } from "react-native-root-siblings";
 import { useLocalSearchParams, useRouter } from "expo-router";
 import { useEffect, useState } from "react";
@@ -18,6 +18,7 @@ import showPasswordPng from "../../assets/show_password.png";
 import hidePassword from "../../assets/hide_password.png";
 import copy from "../../assets/copy.png";
 import infoPng from "../../assets/info.png"
+import { SelectableChip } from "../../components/chip";
 
 export default function Add() {
     const insets = useSafeAreaInsets();
@@ -31,7 +32,7 @@ export default function Add() {
 
     useEffect(() => {
         const getPass = async () => {
-            const store = new Store();
+            const store = new Store("passwords");
             await store.init();
 
             const password = await store.getByIndex(indx);
@@ -42,7 +43,7 @@ export default function Add() {
 
     const handleDelete = async () => {
         authenticate("Identificate para eliminar", async () => {
-            const store = new Store();
+            const store = new Store("passwords");
             await store.init();
             await store.deleteByIndex(indx);
             setShowConfirm(false);
@@ -105,6 +106,30 @@ export default function Add() {
                             <Icon icon={pass.icon} itemName={pass.name} />
                             <Text style={customStyles.nameText}>{pass.name}</Text>
                         </View>
+
+                        {
+                            pass.groups ? (
+                                <View style={customStyles.chipsBoxContainer}>
+                                    <ScrollView
+                                        horizontal
+                                        showsHorizontalScrollIndicator={false}
+                                        contentContainerStyle={[
+                                            customStyles.chipsBox,
+                                            { justifyContent: "center", flexGrow: 1 } // 👈 importante
+                                        ]}
+                                    >
+                                        {pass.groups.map((name, idx) => (
+                                            <SelectableChip
+                                                key={idx}
+                                                label={name}
+                                                selected
+                                            />
+                                        ))}
+                                    </ScrollView>
+                                </View>
+                            ) : null
+
+                        }
 
                         {/* Campos */}
                         {renderCopyField("Correo/usuario", pass.username, copyToClipboard)}
@@ -256,6 +281,8 @@ function Icon({ icon, itemName }) {
         return <FontAwesome name={name} size={60} color={theme.colors.primary} style={customStyles.icon} />;
     else if (type === "FontAwesome5")
         return <FontAwesome5 name={name} size={60} color={theme.colors.primary} style={customStyles.icon} />;
+    else if (type === "MaterialCommunityIcons")
+        return <MaterialCommunityIcons name={name} size={60} color={theme.colors.primary} style={customStyles.icon} />;
     else
         return (
             <View style={customStyles.letterContainer}>
@@ -441,5 +468,15 @@ const customStyles = StyleSheet.create({
         paddingHorizontal: 12,
         marginTop: 5,
     },
-
+    chipsBoxContainer: {
+        width: "100%",
+        justifyContent: "center",
+        marginTop: 5
+    },
+    chipsBox: {
+        flexDirection: "row",
+        alignItems: "center",
+        justifyContent: "center",
+        gap: 1,
+    },
 });
