@@ -51,7 +51,13 @@ export default function Home() {
                 </Text>
             </View>
 
-            <Text style={[styles.secondaryText, {fontSize: 12, position: "absolute", bottom: insets.bottom, right: 15,  alignSelf: "flex-end"}]}>vBeta {packageJson.version}</Text>
+            <Text 
+                style={[
+                        styles.secondaryText, 
+                        {fontSize: 12, position: "absolute", bottom: insets.bottom+5, right: 15,  alignSelf: "flex-end"}
+                    ]}
+                onPress={() => router.push("list")}
+            >vBeta {packageJson.version}</Text>
 
         </View>
     );

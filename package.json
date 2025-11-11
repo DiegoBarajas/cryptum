@@ -1,6 +1,6 @@
 {
   "name": "cryptum",
-  "version": "0.1.7",
+  "version": "0.1.71",
   "main": "expo-router/entry",
   "scripts": {
     "start": "expo start",
@@ -23,7 +23,7 @@
     "react": "19.1.0",
     "react-dom": "19.1.0",
     "react-native": "0.81.5",
-    "react-native-dropdown-picker": "^5.4.6",
+    "react-native-gesture-handler": "^2.29.1",
     "react-native-root-toast": "^4.0.1",
     "react-native-safe-area-context": "~5.6.0",
     "react-native-screens": "~4.16.0",

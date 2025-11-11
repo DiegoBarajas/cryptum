@@ -99,7 +99,6 @@ export default function PasswordIndex() {
         const lowerValue = searchText?.toLowerCase().trim();
         let filtered = {};
 
-        // 🧩 Caso 1: no hay texto de búsqueda
         if (!lowerValue) {
             if (selectedGroup === "Todos") {
                 setCurrentPasswords(allPasswords);
@@ -121,7 +120,6 @@ export default function PasswordIndex() {
             return;
         }
 
-        // 🧩 Caso 2: hay búsqueda
         Object.keys(currentPasswords).forEach((key) => {
             const matches = currentPasswords[key].filter((item) => {
                 const nameMatches = item.name.toLowerCase().includes(lowerValue);
@@ -220,7 +218,11 @@ export default function PasswordIndex() {
             }),
         ]).start(() => {
             if (newMode) inputRef.current?.focus();
-            else setSearchText("");
+            else{
+                inputRef.current?.blur();
+                setSearchText("");
+            } 
+                
         });
     };
 
@@ -240,7 +242,7 @@ export default function PasswordIndex() {
     };
 
     const askToDeleteGroup = (index) => {
-        Vibration.vibrate(100);
+        Vibration.vibrate([0, 100, 0, 100]);
         setModalDeleteVisible(index);
     }
 
