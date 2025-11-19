@@ -115,7 +115,7 @@ export default function Add() {
                                         showsHorizontalScrollIndicator={false}
                                         contentContainerStyle={[
                                             customStyles.chipsBox,
-                                            { justifyContent: "center", flexGrow: 1 } // 👈 importante
+                                            { justifyContent: "center", flexGrow: 1 }
                                         ]}
                                     >
                                         {pass.groups.map((name, idx) => (
@@ -132,7 +132,7 @@ export default function Add() {
                         }
 
                         {/* Campos */}
-                        {renderCopyField("Correo/usuario", pass.username, copyToClipboard)}
+                        {renderCopyField("Nombre de usuario", pass.username, copyToClipboard)}
                         {renderPasswordField("Contraseña", pass.password, showPassword, setShowPassword, copyToClipboard)}
                         {renderNoteField(pass.note)}
 

@@ -217,12 +217,13 @@ export default function PasswordIndex() {
                 useNativeDriver: true,
             }),
         ]).start(() => {
-            if (newMode) inputRef.current?.focus();
-            else{
+            if (newMode) {
+                inputRef.current?.focus();
+            } else {
                 inputRef.current?.blur();
                 setSearchText("");
-            } 
-                
+            }
+
         });
     };
 
@@ -400,15 +401,21 @@ export default function PasswordIndex() {
                             },
                         ]}
                     >
-                        <TextInput
-                            ref={inputRef}
-                            placeholder="Buscar..."
-                            placeholderTextColor="#aaa"
-                            value={searchText}
-                            onChangeText={setSearchText}
-                            style={customStyles.input}
-                            autoFocus={searchMode}
-                        />
+                        {
+                            searchMode
+                                ? (
+                                    <TextInput
+                                        ref={inputRef}
+                                        placeholder="Buscar..."
+                                        placeholderTextColor="#aaa"
+                                        value={searchText}
+                                        onChangeText={setSearchText}
+                                        style={customStyles.input}
+                                        autoFocus={searchMode}
+                                    />
+                                ) : null
+
+                        }
                     </Animated.View>
                 </View>
 
@@ -454,15 +461,15 @@ export default function PasswordIndex() {
             </View>
 
             {/* --- Lista --- */}
-            <AlphabeticalIndex 
-                data={currentPasswords} 
+            <AlphabeticalIndex
+                data={currentPasswords}
                 textIfEmpty={
                     Object.keys(allPasswords).length
-                        ? searchText !== "" 
+                        ? searchText !== ""
                             ? "No hay coincidencias con la búsqueda."
                             : "No hay elementos en este grupo."
                         : "No hay elementos guardados."
-                } 
+                }
             />
 
             {/* --- Botón agregar --- */}
