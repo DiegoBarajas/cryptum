@@ -25,6 +25,7 @@ import quitImg from "../../assets/quit.png";
 import addImg from "../../assets/add.png";
 import { Chip, SelectableChip } from "../../components/chip";
 import { authenticate } from "../../utilities/auth";
+import ModalConfirm from "../../components/modal";
 
 export default function PasswordIndex() {
     const insets = useSafeAreaInsets();
@@ -512,10 +513,10 @@ export default function PasswordIndex() {
             </Modal>
 
             {/* Modal delete */}
-            <Modal transparent visible={modalDeleteVisible !== false} animationType="fade">
+            {/* <Modal transparent visible={modalDeleteVisible !== false} animationType="fade">
                 <View style={customStyles.modalContainer}>
                     <View style={customStyles.modalContent}>
-                        <Text style={[customStyles.modalTitle, { marginBottom: 30 }]}>¿Quieres eliminar el grupo "{modalDeleteVisible !== false ? groups[modalDeleteVisible].name : ""}"?</Text>
+                        <Text style={[customStyles.modalTitle, { marginBottom: 30 }]}></Text>
                         <View style={customStyles.modalButtons}>
                             <TouchableOpacity
                                 style={[customStyles.modalButton, customStyles.modalCancel]}
@@ -532,7 +533,18 @@ export default function PasswordIndex() {
                         </View>
                     </View>
                 </View>
-            </Modal>
+            </Modal> */}
+            <ModalConfirm 
+                isOpen={modalDeleteVisible !== false}
+                setIsOpen={setModalDeleteVisible}
+
+                title={`¿Quieres eliminar el grupo ${ modalDeleteVisible !==  false ? `"${groups[modalDeleteVisible].name}"` : ''}?`}
+                content="Esta acción no se puede revertir, los elementos con ese grupo se mantendrán, solo se eliminará el grupo."
+
+
+                onConfirm={handleDeleteGroup}
+                confirmLabel="Eliminar"
+            />
         </View>
     );
 }

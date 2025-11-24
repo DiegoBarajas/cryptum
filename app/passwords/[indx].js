@@ -19,6 +19,7 @@ import hidePassword from "../../assets/hide_password.png";
 import copy from "../../assets/copy.png";
 import infoPng from "../../assets/info.png"
 import { SelectableChip } from "../../components/chip";
+import ModalConfirm from "../../components/modal";
 
 export default function Add() {
     const insets = useSafeAreaInsets();
@@ -158,7 +159,7 @@ export default function Add() {
                 )}
 
                 {/* Modal de confirmación */}
-                <Modal
+                {/* <Modal
                     transparent
                     visible={showConfirm}
                     animationType="fade"
@@ -187,7 +188,17 @@ export default function Add() {
                             </View>
                         </View>
                     </View>
-                </Modal>
+                </Modal> */}
+                <ModalConfirm 
+                    isOpen={showConfirm}
+                    setIsOpen={setShowConfirm}
+                    title={"¿Estás seguro de que quieres eliminar este elemento?"}
+                    content={`Se eliminará el elemento "${pass?.name}", esto no se puede revertir, ¿Deseas continuar`}
+
+                    confirmLabel="Eliminar"
+                    onConfirm={handleDelete}
+                    
+                />
 
 
                 <Modal
